@@ -10,7 +10,7 @@ const token = process.env.TOKEN;
 const clientId = process.env.CLIENT_ID;
 // const guildId = process.env.GUILD_ID;
 //to use while testing on TestGaspo server
-const guildId = process.env.TEST_GUILD_ID;
+const guildId = process.env.GUILD_ID;
 
 const commands = [];
 const commandsPath = path.join(__dirname, 'commands');

@@ -2,18 +2,27 @@ const { SlashCommandBuilder } = require("@discordjs/builders");
 const wait = require("node:timers/promises").setTimeout;
 
 module.exports = {
-  data: new SlashCommandBuilder().setName("sub").setDescription("sub ?!?"),
+  data: new SlashCommandBuilder()
+    .setName("sub")
+    .setDescription("sub ?!?")
+    .addStringOption((option) =>
+      option.setName("name").setDescription("A qui est-ce destiné ?")
+    ),
   async execute(interaction) {
-    if (interaction.user.id !== process.env.GASPO_ID) {
-      await interaction.reply(
-        `Cette commande est n'est pas pour n'importe qui !`
-      );
-    } else {
-      await interaction.reply(`Va sucer une bite !`);
+    const recipient = `${interaction.options.getString("name")}, ` || "";
+    if (interaction.user.id !== process.env.TY_ZULH_ID) {
+      await interaction.reply({
+        content: `Cette commande n'est pas pour toi !`,
+        ephemeral: true,
+      });
+    } else if (interaction.user.id === process.env.TY_ZULH_ID) {
+      await interaction.reply({ content: "en cours", ephemeral: true });
       await wait(2000);
-      await interaction.followUp(`N'importe laquelle !`);
+      await interaction.channel.send(`${recipient} Va sucer une bite !`);
       await wait(2000);
-      await interaction.followUp(` Mais vas-y !`);
+      await interaction.channel.send(`N'importe laquelle !`);
+      await wait(2000);
+      await interaction.channel.send(`Mais vas-y !`);
     }
   },
 };

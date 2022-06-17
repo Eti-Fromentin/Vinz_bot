@@ -2,6 +2,7 @@ const { Client, Collection } = require("discord.js");
 const fs = require("node:fs");
 const path = require("node:path");
 const dotenv = require("dotenv");
+const wait = require("node:timers/promises").setTimeout;
 dotenv.config();
 
 const token = process.env.TOKEN;
@@ -59,54 +60,64 @@ client.on("interactionCreate", async (interaction) => {
 // :regional_indicator_f: 🔮   🧙‍♀️
 // 🇷  🇦  🇳  🇳  🇨  🇭 🇪  🇲  🇹 🇫  🇼  🇮  🇱  🇰   🇺 🇰  🇱 ▫️  🇩   ▪️  ❕  🍑  🍟  🍔 🥚
 client.on("messageCreate", async (msg) => {
+  const shitRegex = /\b(?:Wild|Tu Duy|Vicky)\b/gi;
+  const starfoullaRegex= /\b(?:starfoullah)\b/gi;
+  const reactRegex= /\b(?:react)\b/gi;
+  const jsRegex= /\b(?:javascript|js)\b/gi;
   console.log("test");
-  // console.log(msg);
 
-  // if (msg.content.includes("hello")) {
-  //   msg.react("🇫");
-  //   msg.react("🇺");
-  //   msg.react("🇨");
-  //   msg.react("🇰");
-  //   msg.react("▫️");
-  //   msg.react("🇹");
-  //   msg.react("🇭");
-  //   msg.react("🇪");
-  //   msg.react("▪️");
-  //   msg.react("🇼");
-  //   msg.react("🇮");
-  //   msg.react("🇱");
-  //   msg.react("🇩");
-  //   msg.react("❕");
-  // }
-  if (msg.content.includes("hey Dumdum!") && msg.author.id === process.env.IRMA_ID) {
-    msg.reply("Comment tu parles à mes copains toi ? Starfoullah !");
-  } else  if (msg.author.id === process.env.IRMA_ID && !msg.content.includes("hey Dumdum!")) {
-    msg.react('✨');
-    msg.react('🇮');
-    msg.react('🇷');
-    msg.react('🇲');
-    msg.react('🇦');
-    msg.react('🧙‍♀️');
-    msg.react('🔮');
+  if (
+    msg.content.includes("hey Dumdum!") &&
+    msg.author.id === process.env.IRMA_ID
+  ) 
+  {
+    const gifIrmaComing = new MessageEmbed()
+		.setDescription("Cover !")
+		.setImage(
+		  "https://c.tenor.com/CdZP6w3-bZcAAAAC/irma-hurricane.gif"
+		);
+    await wait(2000);
+    msg.channel.send("Comment elle parle à mes copains Irma ? Starfoullah !");
+    await wait(2000);
+    await interaction.channel.send({
+      embeds: [gifIrmaComing],
+    });
+  } else if (
+    msg.author.id === process.env.IRMA_ID &&
+    !msg.content.includes("hey Dumdum!")
+  )
+   {
+    msg.react("✨");
+    msg.react("🇮");
+    msg.react("🇷");
+    msg.react("🇲");
+    msg.react("🇦");
+    msg.react("🧙‍♀️");
+    msg.react("🔮");
   }
-  if (msg.content.includes("Wild") && msg.author.id === process.env.GASPO_ID) {
-    msg.react('💩');
-    msg.reply('La Wild, 💩 ...')
-  } 
-   if (msg.content.includes("back") && msg.author.id === process.env.GASPO_ID) {
-    msg.reply(`Un back qui claque des fesses j'espère !!`)
+  if (msg.author.id === process.env.VINZ_ID) {
+    msg.react("🥚");
+    if (msg.content.match(starfoullaRegex)) {
+      msg.react("🥚");
+      msg.reply("Starfoullah ! \n  Ahh Vinz, voilà un gars qui sait vivre, Starfoullah !");
+    }
   }
-  // if (msg.content.includes("hey Dumdum!")) {
-  //   msg.reply("Comment tu parles à mes copains toi ? Starfoullah !");
-  // }
+  if (msg.content.match(shitRegex)) {
+    msg.react("💩");
+  }
+  if (msg.content.includes("back")) {
+    msg.reply(`Un back qui claque des fesses j'espère !!`);
+  }
+  if (msg.content.includes("gras")) {
+    msg.reply(`LE GRAS C'EST LA VIE !`);
+  }
+  if (msg.content.match(reactRegex)) {
+    msg.reply("jsx c'est du javaScript pour les adultes");
+  }
+  if (msg.content.match(jsRegex)) {
+    msg.reply("Si je puis me permettre, c'est du Javastrip");
+  }
 });
-
-// client.on("messageCreate", (msg) => {
-//   console.log('test');
-//   if (msg.content.includes("bite")) {
-//     msg.reply("bite ?");
-//   }
-//   });
 
 // Login to Discord with your client's token
 client.login(token);
