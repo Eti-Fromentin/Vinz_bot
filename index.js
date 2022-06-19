@@ -1,8 +1,15 @@
-const { Client, Collection } = require("discord.js");
+const {
+  Client,
+  Collection,
+  MessageEmbed,
+  MessageAttachment,
+} = require("discord.js");
 const fs = require("node:fs");
 const path = require("node:path");
 const dotenv = require("dotenv");
+const { quoteAndSound } = require("./georgesData");
 const wait = require("node:timers/promises").setTimeout;
+
 dotenv.config();
 
 const token = process.env.TOKEN;
@@ -57,67 +64,97 @@ client.on("interactionCreate", async (interaction) => {
     });
   }
 });
-// :regional_indicator_f: 🔮   🧙‍♀️
-// 🇷  🇦  🇳  🇳  🇨  🇭 🇪  🇲  🇹 🇫  🇼  🇮  🇱  🇰   🇺 🇰  🇱 ▫️  🇩   ▪️  ❕  🍑  🍟  🍔 🥚
-client.on("messageCreate", async (msg) => {
-  const shitRegex = /\b(?:Wild|Tu Duy|Vicky)\b/gi;
-  const starfoullaRegex= /\b(?:starfoullah)\b/gi;
-  const reactRegex= /\b(?:react)\b/gi;
-  const jsRegex= /\b(?:javascript|js)\b/gi;
-  console.log("test");
 
-  if (
-    msg.content.includes("hey Dumdum!") &&
-    msg.author.id === process.env.IRMA_ID
-  ) 
-  {
-    const gifIrmaComing = new MessageEmbed()
-		.setDescription("Cover !")
-		.setImage(
-		  "https://c.tenor.com/CdZP6w3-bZcAAAAC/irma-hurricane.gif"
-		);
-    await wait(2000);
-    msg.channel.send("Comment elle parle à mes copains Irma ? Starfoullah !");
-    await wait(2000);
-    await interaction.channel.send({
-      embeds: [gifIrmaComing],
+client.on("interactionCreate", async (interaction) => {
+  if (!interaction.isSelectMenu()) return;
+  console.log(interaction.values);
+  if (interaction.customId === "selectGeorges") {
+    const citation = quoteAndSound.find(
+      (elt) => elt.name === interaction.values[0]
+    );
+    const file = new MessageAttachment(`./sounds/${interaction.values[0]}.mp3`);
+    await interaction.update({
+      content: "Retente ta chance si le résultat ne te plaît pas...",
+      components: [],
     });
-  } else if (
-    msg.author.id === process.env.IRMA_ID &&
-    !msg.content.includes("hey Dumdum!")
-  )
-   {
-    msg.react("✨");
-    msg.react("🇮");
-    msg.react("🇷");
-    msg.react("🇲");
-    msg.react("🇦");
-    msg.react("🧙‍♀️");
-    msg.react("🔮");
-  }
-  if (msg.author.id === process.env.VINZ_ID) {
-    msg.react("🥚");
-    if (msg.content.match(starfoullaRegex)) {
-      msg.react("🥚");
-      msg.reply("Starfoullah ! \n  Ahh Vinz, voilà un gars qui sait vivre, Starfoullah !");
+    await interaction.channel.send({
+      content: `${interaction.user.username} a utlisé la commande /georges et a choisi #${interaction.values}`,
+    });
+    if (!citation.noSound) {
+      console.log('sound')
+      await interaction.channel.send({
+        content: `>>> ${citation.quote} \n \n  `,
+        embed: [new MessageEmbed().setDescription("Ecouter l'extrait")],
+        files: [file],
+      });
+    } else {console.log('nosound')
+      interaction.channel.send({ content: `>>> ${citation.quote} \n \n \n \n Malheureusement, pas d'extrait sonore pour celui-ci` });
     }
   }
-  if (msg.content.match(shitRegex)) {
-    msg.react("💩");
-  }
-  if (msg.content.includes("back")) {
-    msg.reply(`Un back qui claque des fesses j'espère !!`);
-  }
-  if (msg.content.includes("gras")) {
-    msg.reply(`LE GRAS C'EST LA VIE !`);
-  }
-  if (msg.content.match(reactRegex)) {
-    msg.reply("jsx c'est du javaScript pour les adultes");
-  }
-  if (msg.content.match(jsRegex)) {
-    msg.reply("Si je puis me permettre, c'est du Javastrip");
-  }
-});
+}),
+  // 🔮   🧙‍♀️
+  // 🇷  🇦  🇳  🇳  🇨  🇭 🇪  🇲  🇹 🇫  🇼  🇮  🇱  🇰   🇺 🇰  🇱 ▫️  🇩   ▪️  ❕  🍑  🍟  🍔 🥚
+  client.on("messageCreate", async (msg) => {
+    const shitRegex = /\b(?:Wild|Tu Duy|Vicky)\b/gi;
+    const starfoullaRegex = /\b(?:starfoullah)\b/gi;
+    const reactRegex = /\b(?:react)\b/gi;
+    const jsRegex = /\b(?:javascript|js)\b/gi;
+    console.log("test");
+
+    if (
+      msg.content.includes("hey Dumdum!") &&
+      msg.author.id === process.env.IRMA_ID
+    ) {
+      const gifIrmaComing = new MessageEmbed()
+        .setDescription("Cover !")
+        .setImage("https://c.tenor.com/CdZP6w3-bZcAAAAC/irma-hurricane.gif");
+      await wait(2000);
+      msg.channel.send("Comment elle parle à mes copains Irma ? Starfoullah !");
+      await wait(2000);
+      await interaction.channel.send({
+        embeds: [gifIrmaComing],
+      });
+    } else if (
+      msg.author.id === process.env.IRMA_ID &&
+      !msg.content.includes("hey Dumdum!")
+    ) {
+      msg.react("✨");
+      msg.react("🇮");
+      msg.react("🇷");
+      msg.react("🇲");
+      msg.react("🇦");
+      msg.react("🧙‍♀️");
+      msg.react("🔮");
+    }
+    if (msg.author.id === process.env.VINZ_ID) {
+      msg.react("🥚");
+      if (msg.content.match(starfoullaRegex)) {
+        msg.react("🥚");
+        msg.reply(
+          "Starfoullah ! \n Ahh Vinz, voilà un gars qui sait vivre, Starfoullah !"
+        );
+      }
+    }
+    if (msg.content.match(shitRegex)) {
+      msg.react("💩");
+    }
+    if (msg.content.includes("back")) {
+      await msg.react("🇧");
+      await msg.react("🇦");
+      await msg.react("🇨");
+      await msg.react("🇰");
+      await msg.reply(`qui claque des fesses j'espère !!`);
+    }
+    if (msg.content.includes("gras")) {
+      msg.reply(`LE GRAS C'EST LA VIE !`);
+    }
+    if (msg.content.match(reactRegex)) {
+      msg.reply("jsx c'est du javaScript pour les adultes");
+    }
+    if (msg.content.match(jsRegex)) {
+      msg.reply("Si je puis me permettre, c'est du Javastrip");
+    }
+  });
 
 // Login to Discord with your client's token
 client.login(token);

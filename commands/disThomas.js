@@ -14,7 +14,7 @@ module.exports = {
 		}
         const string = interaction.options.getString('question');
 		await wait(2000);
-		await interaction.channel.send(string ? `@Ty_Zulh Dis Thomas, ${string}` : `Dis Thomas, c'est normal que l'url change à chaque merge ?`);
+		await interaction.channel.send(string ? `@Ty_Zuhl Dis Thomas, ${string}` : `Dis Thomas, c'est normal que l'url change à chaque merge ?`);
 		await wait(2000);
 		await interaction.reply("N'hésite pas à poser d'autres questions, Thomas est toujours dispo !");
 	},
