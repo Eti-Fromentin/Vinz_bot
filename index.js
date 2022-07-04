@@ -81,19 +81,21 @@ client.on("interactionCreate", async (interaction) => {
       content: `${interaction.user.username} a utlisé la commande /georges et a choisi #${interaction.values}`,
     });
     if (!citation.noSound) {
-      console.log('sound')
+      console.log("sound");
       await interaction.channel.send({
         content: `>>> ${citation.quote} \n \n  `,
         embed: [new MessageEmbed().setDescription("Ecouter l'extrait")],
         files: [file],
       });
-    } else {console.log('nosound')
-      interaction.channel.send({ content: `>>> ${citation.quote} \n \n \n \n Malheureusement, pas d'extrait sonore pour celui-ci` });
+    } else {
+      console.log("nosound");
+      interaction.channel.send({
+        content: `>>> ${citation.quote} \n \n \n \n Malheureusement, pas d'extrait sonore pour celui-ci`,
+      });
     }
   }
 }),
-  // 🔮   🧙‍♀️
-  // 🇷  🇦  🇳  🇳  🇨  🇭 🇪  🇲  🇹 🇫  🇼  🇮  🇱  🇰   🇺 🇰  🇱 ▫️  🇩   ▪️  ❕  🍑  🍟  🍔 🥚
+
   client.on("messageCreate", async (msg) => {
     const shitRegex = /\b(?:Wild|Tu Duy|Vicky)\b/gi;
     const starfoullaRegex = /\b(?:starfoullah)\b/gi;
@@ -102,21 +104,23 @@ client.on("interactionCreate", async (interaction) => {
     console.log("test");
 
     if (
-      msg.content.includes("hey Dumdum!") &&
-      msg.author.id === process.env.IRMA_ID
+      msg.author.id === process.env.IRMA_ID &&
+      msg.content.includes("hey Dumdum!") 
     ) {
       const gifIrmaComing = new MessageEmbed()
         .setDescription("Cover !")
         .setImage("https://c.tenor.com/CdZP6w3-bZcAAAAC/irma-hurricane.gif");
       await wait(2000);
-      msg.channel.send("Comment elle parle à mes copains Irma ? Starfoullah !");
+      await msg.channel.send(
+        "Comment elle parle à mes copains Irma ? Starfoullah !"
+      );
       await wait(2000);
-      await interaction.channel.send({
+      await msg.channel.send({
         embeds: [gifIrmaComing],
       });
     } else if (
-      msg.author.id === process.env.IRMA_ID &&
-      !msg.content.includes("hey Dumdum!")
+      !msg.content.includes("hey Dumdum!") &&
+      msg.author.id === process.env.IRMA_ID 
     ) {
       msg.react("✨");
       msg.react("🇮");
@@ -143,7 +147,7 @@ client.on("interactionCreate", async (interaction) => {
       await msg.react("🇦");
       await msg.react("🇨");
       await msg.react("🇰");
-      await msg.reply(`qui claque des fesses j'espère !!`);
+      await msg.reply(`Qui claque des fesses j'espère !!`);
     }
     if (msg.content.includes("gras")) {
       msg.reply(`LE GRAS C'EST LA VIE !`);
@@ -152,9 +156,16 @@ client.on("interactionCreate", async (interaction) => {
       msg.reply("jsx c'est du javaScript pour les adultes");
     }
     if (msg.content.match(jsRegex)) {
-      msg.reply("Si je puis me permettre, c'est du Javastrip");
+      msg.reply("Si je puis me permettre, on devrait dire Javastrip");
     }
   });
 
 // Login to Discord with your client's token
 client.login(token);
+
+
+
+
+  // emoji: 
+  // 🔮   🧙‍♀️
+  // 🇷  🇦  🇳  🇳  🇨  🇭 🇪  🇲  🇹 🇫  🇼  🇮  🇱  🇰   🇺 🇰  🇱 ▫️  🇩   ▪️  ❕  🍑  🍟  🍔 🥚

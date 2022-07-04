@@ -350,7 +350,7 @@ const quoteAndSound = [
     },
     {
         name: "minable",
-        quote: "T'es un minable ! Et tu te crosi le meilleur journaliste du monde ? Mais c'est incroyable, ça.",
+        quote: "T'es un minable ! Et tu te crois le meilleur journaliste du monde ? Mais c'est incroyable, ça.",
     },
     {
         name: "pasteques",

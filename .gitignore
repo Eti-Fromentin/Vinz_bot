@@ -1,2 +1,4 @@
 .env
 node_modules/
+horoscopeData.js
+horoscope.txt
